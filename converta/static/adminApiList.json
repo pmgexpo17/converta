@@ -1,0 +1,113 @@
+{'Title':'csv2json Api Admin Services',
+	'admin services':
+	{'/api/v1/users/<groupName>':
+		{'get all current users':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<adminToken>'"},
+			 'api output':'json userId in group list'
+		}
+	},
+	{'/api/v1/user/get':
+		{'get a user account':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<adminToken>'"
+				 '2':"-d '{"email":"<userEmail>"}'"
+				},
+			 'api output':'user account json hash'
+		}
+	},
+	{'/api/v1/user/delete':
+		{'delete a user account':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<adminToken>'"
+				 '2':"-d '{"email":"<userEmail>","mtype":"<memberType>"}'"
+				},
+			 'api output':'deleted user account json hash'
+		}
+	},
+	{'/api/v1/user/patch':
+		{'patch a user account':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<adminToken>'"
+				 '2':"-d '{"email":"<userEmail>","mixin":{<mixin dict>}}'"
+				},
+			 'api output':'patched user account json hash'
+		}
+	},
+	{'/api/v1/user/new':
+		{'add a new user account':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<adminToken>'"
+				 '2':"-d '{"name":"<userName>","group":"<groupName>","email":"<userEmail>"}'"
+				},
+			 'api output':'new user account json hash'
+		}
+	},
+	{'/api/v1/member/get':
+		{'get a member account':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<adminToken>'"
+				 '2':"-d '{"email":"<userEmail>","mtype":"<memberType>"}'"
+				},
+			 'api output':'user account json hash'
+		}
+	},
+	{'/api/v1/member/delete':
+		{'delete a member account':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<adminToken>'"
+				 '2':"-d '{"email":"<userEmail>","mtype":"<memberType>"}'"
+				},
+			 'api output':'deleted member account json hash'
+		}
+	},
+	{'/api/v1/member/patch':
+		{'patch a member account':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<adminToken>'"
+				 '2':"-d '{"email":"<userEmail>","mtype":"<memberType>","mixin":{<mixin dict>}}'"
+				},
+			 'api output':'patched member account json hash'
+		}
+	},
+	{'/api/v1/member/new':
+		{'add a new member account':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<adminToken>'"
+				 '2':"-d '{"email":"<userEmail>","mtype":"<memberType>","mixin":{<mixin dict>}}'"
+				},
+			 'api output':'new member account json hash'
+		}
+	}
+	{'/api/v1/admin/test/csv2json':
+		{'csv2json conversion test':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<yourToken>'",
+				 '2':'-F srcfile=@{/local/path/to/your/csv/srcfile.zip'},
+			 'api output':'api parsing report confirms data is valid or otherwise'
+		}
+	},
+	'/api/v1/admin/csv2json':
+		{'csv2json conversion':
+			{'curl input':'same as for csv2json conversion test',
+			 'api output':'converted json text stream'
+		}
+	},
+	'/api/v1/admin/test/json2csv':
+		{'json2csv conversion test':
+			{'curl input':
+				{'1':"-H 'X-Api-Token:<yourToken>'",
+				 '2':'-F srcfile=@{/local/path/to/your/json/srcfile.json'},
+			 'api output':'api parsing report confirms data is valid or otherwise'
+		}
+	},
+	'/api/v1/admin/json2csv':
+		{'json2csv conversion':
+			{'curl input':'same as for json2csv conversion test',
+			 'api output':'converted csv zipfile binary stream'
+			}
+		}
+	}
+
+}
+		
