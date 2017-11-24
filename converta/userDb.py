@@ -517,7 +517,7 @@ class UserDb(HardHash):
 		try:
 			userName, groupName, userEmail = \
 													HardHash.parse(userData,'name:group:email')
-		except ValueError:
+		except Exception:
 			raise HTTPBadRequest('invalid user data : %s' % str(userData))
 		reason1 = '''%s must be lowercase alphanumeric, length between 
                  3 and 12 chars'''

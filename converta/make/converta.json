@@ -1,1 +1,1 @@
-{"mtype": "admin", "install": "ready", "email": "pmg7670@gmail.com", "name": "peter", "group": "admin", "umixin": {"isAdmin": "True", "pkToken": ["dgpqrFmkcQrpccr:kglgkglc", "d_tmspgrcNcrL_kc:rm`w"]}, "mmixin": null}
+{"email": "pmg7670@gmail.com", "umixin": {"isAdmin": "True", "pkToken": ["dgpqrFmkcQrpccr:kglgkglc", "d_tmspgrcNcrL_kc:rm`w"]}, "install": "ready", "mmixin": null, "mtype": "admin", "group": "admin", "name": "peter"}

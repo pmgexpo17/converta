@@ -54,7 +54,10 @@ def getUserParms(request, keepL=None, **kwargs):
 	if not keepL:
 		return userDict
 	
-	return HardHash.parse(userDict,keepL)
+	try:
+		return HardHash.parse(userDict,keepL)
+	except Exception as exc:
+		raise HTTPBadRequest(str(exc))
 		
 # getAdminAccessToken
 def getAdminAccessToken(request, **kwargs):
