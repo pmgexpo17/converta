@@ -11,25 +11,27 @@ Design features :
 - see hardHash.py for a persistent hash design, similar to python shelve
 - fulled tested and proven using curl web client
 - deployed at Heroku for demo and future business options
-- as at 25 Nov 2017, api is hosted at https://converta.herokuapp.com
+- as at 25 Nov 2017, api is hosted on heroku
 
 To try a demo :
 
 1. request the access token for demo user guest01@globalmedia.com
 2. download the sample csv zipfile, unittest_csv02.zip in sample/
 3. open a terminal
-4. run csv2json test command : 
+4. get member api apps list:
+  curl -H X-Api-Token:<guest01-token> https://converta.herokuapp.com/api/v1/member/list
+5. run csv2json test command : 
   curl -H X-Api-Token:<guest01-token> -F srcfile=@/local/path/to/sample/unittest_csv02.zip
 	              https://converta.herokuapp.com/api/v1/member/test/csv2json
 		api will confirm csv content is valid
-5. run csv2json command, redirecting :
+6. run csv2json command, redirecting :
   curl -H X-Api-Token:<guest01-token> -F srcfile=@/local/path/to/sample/unittest_csv02.zip
     https://converta.herokuapp.com/api/v1/member/test/csv2json > unittest_json02.txt
-6. run json2csv test command :
+7. run json2csv test command :
   curl -H X-Api-Token:<guest01-token> -F srcfile=@/local/path/to/sample/unittest_json02.txt
 	              https://converta.herokuapp.com/api/v1/member/test/json2csv
 		api will confirm json content is valid
-7. run json2csv command :
+8. run json2csv command :
   curl -H X-Api-Token:<guest01-token> -F srcfile=@/local/path/to/sample/unittest_json02.txt
 	  https://converta.herokuapp.com/api/v1/member/json2csv > unittest_csv02a.zip
 
