@@ -15,7 +15,7 @@ Design features :
 
 To try a demo :
 
-1. request the access token for demo user guest01@globalmedia.com
+1. email pmg7670@gmail.com to request a guest account access token
 2. download the sample csv zipfile, unittest_csv02.zip in sample/
 3. open a terminal
 4. get member api apps list:
