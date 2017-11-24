@@ -83,7 +83,7 @@
 		{'csv2json conversion test':
 			{'curl input':
 				{'1':"-H 'X-Api-Token:<yourToken>'",
-				 '2':'-F srcfile=@{/local/path/to/your/csv/srcfile.zip'},
+				 '2':'-F srcfile=@/local/path/to/your/csv/srcfile.zip',
 			 'api output':'api parsing report confirms data is valid or otherwise'
 		}
 	},
@@ -97,7 +97,7 @@
 		{'json2csv conversion test':
 			{'curl input':
 				{'1':"-H 'X-Api-Token:<yourToken>'",
-				 '2':'-F srcfile=@{/local/path/to/your/json/srcfile.json'},
+				 '2':'-F srcfile=@/local/path/to/your/json/srcfile.json',
 			 'api output':'api parsing report confirms data is valid or otherwise'
 		}
 	},
