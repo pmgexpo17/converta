@@ -2,16 +2,16 @@ Converta - part1 - cornice api for csv to json conversion and reverse
 
 Design features :
 
-  Cornice python web service framework
-  Authorization by api token
-  Csv2json conversion by uploading csv zipfile and streaming json output
-  Json2csv conversion by uploading json record file and streaming csv zipfile output
-  Test option included to confirm parsing success
-  Admin functions for user CRUD
-  See hardHash.py for a persistent hash design, similar to python shelve
-  Fulled tested and proven using curl web client
-  Deployed at Heroku for demo and future business options
-  As at 25 Nov 2017, this api is hosted at https://converta.herokuapp.com
+- cornice python web service framework
+- authorization by api token
+- csv2json conversion by uploading csv zipfile and streaming json output
+- json2csv conversion by uploading json record file and streaming csv zipfile output
+- test option included to confirm parsing success
+- admin functions for user CRUD
+- see hardHash.py for a persistent hash design, similar to python shelve
+- fulled tested and proven using curl web client
+- deployed at Heroku for demo and future business options
+- as at 25 Nov 2017, api is hosted at https://converta.herokuapp.com
 
 To try a demo :
 
