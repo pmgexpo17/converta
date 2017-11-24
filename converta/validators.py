@@ -32,15 +32,16 @@ def validParms1(request, **kwargs):
 	
 # in this case, user has forgot their access token and
 # validates by an encoded personal information question:answer key
-def validUserPkToken(request, userEmail, **kwargs):
+def validPkAccessToken(request, **kwargs):
 	header = 'X-Api-PK-Token'
 	pkToken = request.headers.get(header)
 	
 	if pkToken is None:
 		return False
 
-	if not request.hasUserPkToken(userEmail, pkToken):
-		raise HTTPUnauthorized("Unauthorized")
+	userKey = 'user:' + getUserParms(request,'email')
+	
+	return request.hasPkAccessToken(userKey, pkToken)
 
 # get userDict by converting json post data
 def getUserParms(request, keepL=None, **kwargs):
@@ -53,7 +54,7 @@ def getUserParms(request, keepL=None, **kwargs):
 	if not keepL:
 		return userDict
 	
-	return HardHash.parse(userDict,keepL,pmode=[])
+	return HardHash.parse(userDict,keepL)
 		
 # getAdminAccessToken
 def getAdminAccessToken(request, **kwargs):
@@ -62,7 +63,7 @@ def getAdminAccessToken(request, **kwargs):
 	accessToken = request.headers.get(header)
 	
 	if accessToken is None:
-		return False
+		raise HTTPUnauthorized("Unauthorized")
 
 	userKey = 'admin:' + accessToken
 	
@@ -78,8 +79,24 @@ def validAdminParms1(request, **kwargs):
 	getAdminAccessToken(request)
 
 # validAdminParams2
-# route:/api/v1/user/get|delete|patch
+# route:/api/v1/user/get
 def validAdminParms2(request, **kwargs):
+
+	try:
+		adminKey = 'admin:' + getAdminAccessToken(request)
+	except HTTPUnauthorized:
+		if validPkAccessToken(request):
+			return
+		raise
+		
+	# only root user can peek at other administrator accounts	
+	if not request.adminInRoot(adminKey,True) and \
+																				request.hasAdminRole(userKey):
+		raise HTTPUnauthorized("Unauthorized")
+
+# validAdminParams3
+# route:/api/v1/user/delete|patch
+def validAdminParms3(request, **kwargs):
 
 	adminKey = 'admin:' + getAdminAccessToken(request)
 
@@ -90,9 +107,9 @@ def validAdminParms2(request, **kwargs):
 																				request.hasAdminRole(userKey):
 		raise HTTPUnauthorized("Unauthorized")
 		
-# validAdminParams3 - NEW requests	only
+# validAdminParams4 - NEW requests	only
 # route:/api/v1/user/new
-def validAdminParms3(request, **kwargs):
+def validAdminParms4(request, **kwargs):
 
 	getAdminAccessToken(request)
 

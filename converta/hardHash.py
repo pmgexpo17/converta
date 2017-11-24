@@ -384,7 +384,7 @@ class HardHash(MutableMapping):
 		return db
 
 	@staticmethod
-	def parse(_dict, skeep, pmode={}):
+	def parse(_dict, skeep, pmode=[]):
 		
 		if skeep:
 			keep = skeep.split(':')

@@ -7,7 +7,7 @@ from pyramid.httpexceptions import \
   HTTPNotFound, HTTPException, HTTPBadRequest, HTTPServiceUnavailable
 from pyramid.response import FileResponse, FileIter
 from converta.validators import validParms1, validAdminParms1, \
-  validAdminParms2, validAdminParms3
+  validAdminParms2, validAdminParms3, validAdminParms4
 from converta.csv2Json.csv2Json import Csv2Json
 from converta.json2Csv.json2Csv import Json2Csv
 from converta.hardHash import HardHash
@@ -60,9 +60,8 @@ def get_user(request):
 	except JSONDecodeError as exc:
 		raise HTTPBadRequest('json decode error : ' + str(exc))
 
-	userKey = 'user:' + HardHash.parse(userDict,'email',pmode=[])
-	
 	try:
+		userKey = 'user:' + HardHash.parse(userDict,'email')
 		response = request.getUserAccount(userKey)
 	except Exception as exc:
 		raise HTTPBadRequest(str(exc))
@@ -74,7 +73,7 @@ deleteUser = Service(name='deleteUser',
                path='/api/v1/user/delete',
                description="User maintenance")
 
-@deleteUser.post(validators=validAdminParms2)
+@deleteUser.post(validators=validAdminParms3)
 def delete_user(request):
 	"""delete the user."""
 
@@ -83,9 +82,9 @@ def delete_user(request):
 	except JSONDecodeError as exc:
 		raise HTTPBadRequest('json decode error : ' + str(exc))
 
-	userEmail, memberType = HardHash.parse(userDict,'email:mtype',pmode=[])
-	userKey = 'user:' + userEmail	
 	try:
+		userEmail, memberType = HardHash.parse(userDict,'email:mtype')
+		userKey = 'user:' + userEmail	
 		response = request.deleteUser(userKey, memberType)
 	except Exception as exc:
 		raise HTTPBadRequest(str(exc))
@@ -97,7 +96,7 @@ patchUser = Service(name='patchUser',
                path='/api/v1/user/patch',
                description="User maintenance")
 
-@patchUser.post(validators=validAdminParms2)
+@patchUser.post(validators=validAdminParms3)
 def patch_user(request):
 	"""reset the users access token"""
 	
@@ -118,7 +117,7 @@ newUser = Service(name='newUser',
                path='/api/v1/user/new',
                description="User maintenance")
 
-@newUser.post(validators=validAdminParms3)
+@newUser.post(validators=validAdminParms4)
 def new_user(request):
 	"""Add a new user."""
 	
@@ -139,7 +138,7 @@ getMember = Service(name='getMember',
                path='/api/v1/member/get',
                description="Member maintenance")
 
-@getMember.post(validators=validAdminParms2)
+@getMember.post(validators=validAdminParms3)
 def get_member(request):
 	"""get member account."""
 	
@@ -149,13 +148,8 @@ def get_member(request):
 		raise HTTPBadRequest('json decode error : ' + str(exc))
 
 	try:
-		userEmail, memberType = HardHash.parse(userDict,
-																					 'email:mtype',pmode=[])
-	except Exception as exc:
-		raise HTTPBadRequest(str(exc))
-														
-	userKey = 'user:' + userEmail
-	try:
+		userEmail, memberType = HardHash.parse(userDict,'email:mtype')	
+		userKey = 'user:' + userEmail
 		response = request.getMemberAccount(userKey, memberType)
 	except Exception as exc:
 		raise HTTPBadRequest(str(exc))
@@ -167,7 +161,7 @@ deleteMember = Service(name='deleteMember',
                    path='/api/v1/member/delete',
                    description="Member maintenance")
 
-@deleteMember.post(validators=validAdminParms2)
+@deleteMember.post(validators=validAdminParms3)
 def delete_member(request):
 	"""delete a member."""
 	
@@ -177,12 +171,8 @@ def delete_member(request):
 		raise HTTPBadRequest('json decode error : ' + str(exc))
 
 	try:
-		userEmail, memberType = HardHash.parse(userDict,
-                                           'email:mtype',pmode=[])
-	except Exception as exc:
-		raise HTTPBadRequest(str(exc))
-	userKey = 'user:' + userEmail          
-	try:
+		userEmail, memberType = HardHash.parse(userDict,'email:mtype')
+		userKey = 'user:' + userEmail          
 		response = request.deleteMember(userKey, memberType)
 	except Exception as exc:
 		raise HTTPBadRequest(str(exc))
@@ -194,7 +184,7 @@ patchMember = Service(name='patchMember',
                path='/api/v1/member/patch',
                description="Member maintenance")
 
-@patchMember.post(validators=validAdminParms2)
+@patchMember.post(validators=validAdminParms3)
 def patch_member(request):
 	"""reset the users access token"""
 	

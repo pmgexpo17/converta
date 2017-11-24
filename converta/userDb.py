@@ -35,8 +35,7 @@ class UserDb(HardHash):
 	def addUser(self, userData):
 
 		try:
-			groupName, userEmail = HardHash.parse(userData,
-		                                       'group:email',pmode=[])
+			groupName, userEmail = HardHash.parse(userData,'group:email')
 		except Exception as exc:
 			raise HTTPBadRequest(str(exc))
 
@@ -77,7 +76,7 @@ class UserDb(HardHash):
 
 		# userData is approved by validateUserData
 		try:
-			account = HardHash.parse(userData,'name:group:email')
+			account = HardHash.parse(userData,'name:group:email',pmode={})
 			umixin = HardHash.parse(userData,'umixin')
 		except Exception as exc:
 			raise HTTPBadRequest(str(exc))
@@ -104,7 +103,7 @@ class UserDb(HardHash):
 		
 		try:
 			userEmail, memberType, mmixin = \
-						HardHash.parse(memberData,'email:mtype:mmixin',pmode=[])
+											HardHash.parse(memberData,'email:mtype:mmixin')
 		except Exception as exc:
 			raise HTTPBadRequest(str(exc))
 
@@ -248,7 +247,7 @@ class UserDb(HardHash):
 		memberAccount = self.getMemberAccount(userKey, memberType)
 		
 		# 1 of 3, update accessKey in user account
-		self.update(self.accountKey, {'accessKey': None})
+		self.update(self.accountKey, {'accessToken': None})
 
 		# 2 of 3, remove member in all members
 		self.removeGroupToken('member:all', self.accessToken)
@@ -420,10 +419,13 @@ class UserDb(HardHash):
 	# -------------------------------------------------------------- #
 	# return pkToken in account pkToken list
 	# ---------------------------------------------------------------#
-	def hasUserPkToken(self, userKey, pkToken):
+	def hasPkAccessToken(self, userKey, pkToken):
 
 		account = self.getUserAccount(userKey)
-						
+		
+		if not account['pkToken']:
+			return False
+			
 		return pkToken in account['pkToken']
 
 	# -------------------------------------------------------------- #
@@ -477,8 +479,7 @@ class UserDb(HardHash):
 	def updateUserAccount(self, userData):
 
 		try:
-			userEmail, umixin = HardHash.parse(userData,
-																					 'email:umixin',pmode=[])
+			userEmail, umixin = HardHash.parse(userData,'email:umixin')
 		except Exception as exc:
 			raise HTTPBadRequest(str(exc))
 		
@@ -495,8 +496,8 @@ class UserDb(HardHash):
 	def updateMemberAccount(self, memberData):
 		
 		try:
-			userEmail, memberType, mmixin = HardHash.parse(memberData,
-																					 'email:mtype:mmixin',pmode=[])
+			userEmail, memberType, mmixin = \
+											HardHash.parse(memberData,'email:mtype:mmixin')
 		except Exception as exc:
 			raise HTTPBadRequest(str(exc))
 
@@ -515,7 +516,7 @@ class UserDb(HardHash):
 		
 		try:
 			userName, groupName, userEmail = \
-							HardHash.parse(userData,'name:group:email',pmode=[])
+													HardHash.parse(userData,'name:group:email')
 		except ValueError:
 			raise HTTPBadRequest('invalid user data : %s' % str(userData))
 		reason1 = '''%s must be lowercase alphanumeric, length between 
@@ -582,7 +583,8 @@ class UserDbFactory(object):
 			#print('making a new userDb')
 			userDb.addUser(self.makeObj)
 			userDb.addGroupToken('user:root', token=userDb.userId)
-			memberData = HardHash.parse(self.makeObj,'email:mtype:mmixin')
+			memberData = \
+						HardHash.parse(self.makeObj,'email:mtype:mmixin',pmode={})
 			userDb.addMember(memberData)
 			userDb.sync()
 		else:

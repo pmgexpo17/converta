@@ -39,9 +39,9 @@ def includeme(config):
 		
 		return request.userDb.getMemberAccount(userKey, memberType)
 
-	def _hasUserPkToken(request, userKey, pkToken):
+	def _hasPkAccessToken(request, userKey, pkToken):
 		
-		return request.userDb.hasUserPkToken(userKey, pkToken)
+		return request.userDb.hasPkAccessToken(userKey, pkToken)
 
 	def _adminInRoot(request, userKey, byXRef=False):
 		
@@ -113,7 +113,7 @@ def includeme(config):
 	config.add_request_method(_getUsersInGroup,'getUsersInGroup')
 	config.add_request_method(_getUserAccount,'getUserAccount')
 	config.add_request_method(_getMemberAccount,'getMemberAccount')
-	config.add_request_method(_hasUserPkToken,'hasUserPkToken')
+	config.add_request_method(_hasPkAccessToken,'hasPkAccessToken')
 	config.add_request_method(_userInGroup,'userInGroup')
 	config.add_request_method(_accessTokenIsValid,'accessTokenIsValid')
 	config.add_request_method(_adminInRoot,'adminInRoot')
