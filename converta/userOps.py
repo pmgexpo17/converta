@@ -11,8 +11,6 @@ def includeme(config):
 		# userDb is created at installation
 		userDb = UserDbFactory.make('noSqlDb/users')
 		HardHashFactory.hashFile = 'convertaDb'
-		# for each group create a database, which occurs once initially
-		# next time it recreates if the repoPath has been removed
 		config.registry.settings['userDb'] = userDb
 		config.registry.settings['sessionDb'] = HardHashFactory
 	except Exception as exc:
