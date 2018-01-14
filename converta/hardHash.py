@@ -406,10 +406,6 @@ class HardHash(MutableMapping):
 # HardHashFactory
 #
 # - convenience HardHash instance factory
-# - this is a demo class which recommends the factory style for
-# - application specific instance creation
-#
-# - fileNameHH: class variable, HardHash instance filename 
 #----------------------------------------------------------------#		
 class HardHashFactory(object):
 	hashFile = None
@@ -417,6 +413,7 @@ class HardHashFactory(object):
 	#----------------------------------------------------------------#
 	# make -
 	# - repoPath: absolute filesystem location of HardHash filename
+	# - hashFile: user defined hash filename 
 	# - makeFlag: same as python shelve
 	# -- persistance depends on the application type. is your hash
 	# -- just a throw away convenience resource or is it permanent
